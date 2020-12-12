@@ -313,10 +313,25 @@ def run():
         f.write(arrange_lyrics)
         f.write("\n\n")
 
-    if download_method == 1 or download_method == 2:
+    if download_method == 1:# or download_method == 2:
       #TODO Due to inconsistencies between sequence and section specifications, as well
       #     as performance time changes, give the user a chance to modify the arrangement
       #     sequence based on section labels.
+      print("Arrangement for " + song_title + " has the following sections:")
+      for si in secs:
+        print(si + ":\n" + secs[si])
+      print("Arrangement sequence for " + song_title + ":")
+      print(arrange_json['attributes']['sequence'])
+      print("Defined sections for " + song_title + ":")
+      print(secs.keys())
+      new_arrange = input("Enter comma separated list of sections in the order they are to appear in the SRT (undefined sections will be replaced with a blank entry in the SRT). Press Enter to use the arrangement above.\n")
+      if new_arrange == "":
+          arrangement = arrange_json['attributes']['sequence']
+      else:
+          arrangement = list(map(lambda x: x.strip(), new_arrange.split(',')))
+          print(arrangement)
+          input("Press Enter to continue.")
+
       with open((song_title + " by " + arrange_name + ".srt").strip().replace("/","_").replace(":","_").replace('"',"_").replace("?","_"),"w") as f:
         f.write(rec.print())
         rec.next_10s()
@@ -327,7 +342,7 @@ def run():
         f.write("\u00A9" + song_copyright + "\n")
         f.write("CCLI # " + str(song_ccli) + " -- CCLI License " + str(org_ccli) + "\n")
         f.write("\n")
-        for si in arrange_json['attributes']['sequence']:
+        for si in arrangement:
           #TODO There is an issue here were the arrangement seqence is not forced to be
           #     consistent with the arrangement section labels.  In fact there are instances
           #     where an arrangement is changed so it suits the needs in Music Stand, but
