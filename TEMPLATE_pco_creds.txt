@@ -1,0 +1,4 @@
+#To use this file, rename it to "pco_creds.txt"
+#The following two lines need to your app_id on the first line and secret on the second line
+abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890
+1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
